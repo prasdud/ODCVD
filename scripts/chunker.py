@@ -55,9 +55,6 @@ def generate_chunk_filename(index: int, output_dir: str = OUTPUT_DIR, extension:
     filename = f"chunk{index:03d}.{extension}"
     return os.path.join(output_dir, filename)
 
-# -----------------------------
-# Main Chunking Function
-# -----------------------------
 
 def split_video_into_chunks(video_path: str, chunk_length: int = CHUNK_LENGTH, output_dir: str = OUTPUT_DIR):
     """
@@ -105,9 +102,7 @@ def split_video_into_chunks(video_path: str, chunk_length: int = CHUNK_LENGTH, o
         json.dump(manifest, f, indent=4)
     print(f"Chunking complete. Manifest saved to {manifest_path}")
 
-# -----------------------------
-# Script Entry Point
-# -----------------------------
+
 if __name__ == "__main__":
-    video_file = "demo/video.mp4"  # Update this to your test video path
+    video_file = "demo/video.mp4"
     split_video_into_chunks(video_file)
