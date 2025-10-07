@@ -1,18 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ODCVD Player MVP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypted Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        video {
+            width: 100%;
+            max-width: 800px;
+            background: #000;
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .status {
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .chunk-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-  <h2>🔐 ODCVD - On-Demand Chunk Video Decryptor</h2>
+    <h1>🔒 Encrypted Video Player</h1>
+    
+    <video id="video" controls></video>
+    
+    <div class="status" id="status">
+        Loading player...
+    </div>
+    
+    <div class="controls">
+        <button onclick="videoPlayer.play()">Play</button>
+        <button onclick="videoPlayer.pause()">Pause</button>
+        <button onclick="videoPlayer.loadNextChunk()">Next Chunk</button>
+        <button onclick="showChunkInfo()">Show Info</button>
+    </div>
 
-  <video id="videoPlayer" width="640" height="360" controls></video>
+    <div class="chunk-info" id="chunkInfo" style="display: none;">
+        <div>Chunk: <span id="currentChunk">0</span>/<span id="totalChunks">0</span></div>
+        <div>Duration: <span id="chunkDuration">0</span>s</div>
+        <div>Start: <span id="chunkStart">0</span>s</div>
+    </div>
 
-  <p id="status">Loading manifest...</p>
+    <script src="/web/decryptor.js"></script>
+    <script>
+        function showChunkInfo() {
+            const info = videoPlayer.getCurrentChunkInfo();
+            if (info) {
+                document.getElementById('currentChunk').textContent = info.current + 1;
+                document.getElementById('totalChunks').textContent = info.total;
+                document.getElementById('chunkDuration').textContent = info.chunk.duration;
+                document.getElementById('chunkStart').textContent = info.chunk.start;
+                document.getElementById('chunkInfo').style.display = 'flex';
+            }
+        }
 
-  <!-- Link JS decryptor -->
-  <script src="/web/decryptor.js"></script>
+        // Update status messages
+        setInterval(() => {
+            const video = document.getElementById('video');
+            const status = document.getElementById('status');
+            
+            if (video.src && window.videoPlayer && window.videoPlayer.manifest) {
+                const info = videoPlayer.getCurrentChunkInfo();
+                if (info) {
+                    status.textContent = `Playing chunk ${info.current + 1}/${info.total} | Decrypted AES-GCM`;
+                }
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
