@@ -109,7 +109,11 @@ if __name__ == "__main__":
     if not valid:
         exit(1)
 
-    key = get_random_bytes(32)
+    # key = get_random_bytes(32)
+    #     
+    key = b'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+    print(list(key))
+    # Should print: [65, 65, 65, ..., 65] (32 times)
 
     KEY_FILE = os.path.join(OUTPUT_DIR, "aes_key.bin")
     with open(KEY_FILE, "wb") as f:
