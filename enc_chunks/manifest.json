@@ -1,67 +1,67 @@
 {
     "chunks": [
         {
-            "filename": "enc_chunks/chunk000.enc",
+            "filename": "chunk000.enc",
             "start": 0,
             "duration": 10,
-            "iv": "db514df0dd9a52c19aaf6c55",
-            "tag": "660309f710b79efc87eddc57640ba878"
+            "iv": "5624350721cfbadd07aa73ab",
+            "tag": "322f908bf198b63bd0917c17cea1ffa8"
         },
         {
-            "filename": "enc_chunks/chunk001.enc",
+            "filename": "chunk001.enc",
             "start": 10,
             "duration": 10,
-            "iv": "98fae1557073ee9e060342b0",
-            "tag": "d0e83193c5b7039e82a077c08d3ac76f"
+            "iv": "ec53bfa1b19a3e5305178128",
+            "tag": "d1c35d052d990ddeea7f2f6909f299d7"
         },
         {
-            "filename": "enc_chunks/chunk002.enc",
+            "filename": "chunk002.enc",
             "start": 20,
             "duration": 10,
-            "iv": "887dad7199f4d10c2779c337",
-            "tag": "b99f88d0039074ca6000d5834efac1d7"
+            "iv": "c22ad2797507a1be45dceb24",
+            "tag": "a1081c53a643c7609c1d80133b0377ae"
         },
         {
-            "filename": "enc_chunks/chunk003.enc",
+            "filename": "chunk003.enc",
             "start": 30,
             "duration": 10,
-            "iv": "1f0f1da012fd06e28d55bf58",
-            "tag": "9eb47d5a0e3908db07d50dedd5a8ddc7"
+            "iv": "e6b32550599d57f1edab6ff3",
+            "tag": "8d6c6f4ed3b7365dabfbc1208fa979a1"
         },
         {
-            "filename": "enc_chunks/chunk004.enc",
+            "filename": "chunk004.enc",
             "start": 40,
             "duration": 10,
-            "iv": "c52a9265151fc21b2d05b2a7",
-            "tag": "c8300622dbdb35c641e252d134a20b9c"
+            "iv": "71f7aa7202f188d19b30ab67",
+            "tag": "de65f765147403c8d02c02dbda7cdbcf"
         },
         {
-            "filename": "enc_chunks/chunk005.enc",
+            "filename": "chunk005.enc",
             "start": 50,
             "duration": 10,
-            "iv": "d9df257e04ea72b51443122f",
-            "tag": "0141b614aa517985792540ceced9ea61"
+            "iv": "5ab725952ee4b0e105fc8b38",
+            "tag": "068a97f368a9682547abb4ae0dec2330"
         },
         {
-            "filename": "enc_chunks/chunk006.enc",
+            "filename": "chunk006.enc",
             "start": 60,
             "duration": 10,
-            "iv": "799a75b0e7008f73fde465f6",
-            "tag": "811b09dd2c39b6dd757e98f734683972"
+            "iv": "fc3c7d9a2969aaed0b0fe7d3",
+            "tag": "0ca0cc26336fefc65f0311363390bcf0"
         },
         {
-            "filename": "enc_chunks/chunk007.enc",
+            "filename": "chunk007.enc",
             "start": 70,
             "duration": 10,
-            "iv": "6a4291012d40e60807b84ab5",
-            "tag": "c74ed261d874cae27489ef687fc9c358"
+            "iv": "373c2b8828e4189d7074cf92",
+            "tag": "af34bac2de3b606c08c249490561b90a"
         },
         {
-            "filename": "enc_chunks/chunk008.enc",
+            "filename": "chunk008.enc",
             "start": 80,
             "duration": 5.141133999999994,
-            "iv": "c102b7d7d128891c86124f50",
-            "tag": "bad0455b3d1c816b7fb445ef9743009b"
+            "iv": "e8d47d834562f41a8db74e7a",
+            "tag": "2bfd68283b4821fb1e1cc0f130791f4c"
         }
     ]
 }
