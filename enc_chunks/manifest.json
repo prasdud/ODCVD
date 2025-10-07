@@ -4,64 +4,64 @@
             "filename": "enc_chunks/chunk000.enc",
             "start": 0,
             "duration": 10,
-            "iv": "bebf42dec622360cb4caef44",
-            "tag": "39328b066542166dc1893a534f0e84a3"
+            "iv": "22cded9da60a48389fe72fd2",
+            "tag": "979cca6fd6cabdd086eb06512805a8a3"
         },
         {
             "filename": "enc_chunks/chunk001.enc",
             "start": 10,
             "duration": 10,
-            "iv": "1665d98e556142e37bbec89b",
-            "tag": "4962bec79921e729005bb65e8a191782"
+            "iv": "f5d38460efe47a7faf8c2973",
+            "tag": "410735ceb0df7a148dfa95a8d1f72e4d"
         },
         {
             "filename": "enc_chunks/chunk002.enc",
             "start": 20,
             "duration": 10,
-            "iv": "d101c6a19d0e7db1e053ba9d",
-            "tag": "966fe3f51d98eaa38f15baa710d9a0ef"
+            "iv": "5a7547be4a9ab60181204d89",
+            "tag": "919f11ef7c0d39d495076ee79a7098fa"
         },
         {
             "filename": "enc_chunks/chunk003.enc",
             "start": 30,
             "duration": 10,
-            "iv": "d03b0259526d9657168ee444",
-            "tag": "6911028a5315d28c5a976ae89756387b"
+            "iv": "6acc59ff88abb03bd9128067",
+            "tag": "b6b1cd8a084e47f0f6dab6d10f7ac96e"
         },
         {
             "filename": "enc_chunks/chunk004.enc",
             "start": 40,
             "duration": 10,
-            "iv": "ae7d8a92f4e2496fad21e1eb",
-            "tag": "4cd9a8880cfa4aa178b08ac32de0b7f9"
+            "iv": "d578aac2d5d0dabdfd181201",
+            "tag": "a3980fbf50645b1cf8cd936fa5b8070c"
         },
         {
             "filename": "enc_chunks/chunk005.enc",
             "start": 50,
             "duration": 10,
-            "iv": "c0469b2185976305b4eaa407",
-            "tag": "16266b7768da54851974aaa6d328d1d1"
+            "iv": "64398ad5ebcdd827f1a5bbe9",
+            "tag": "d9f9c89f5eab4e55043d0c7674718230"
         },
         {
             "filename": "enc_chunks/chunk006.enc",
             "start": 60,
             "duration": 10,
-            "iv": "8499ea7caf1bb1e4a78ad423",
-            "tag": "59ff316958834e09373c0f261e5c4698"
+            "iv": "150ec9ac816c9f86bf9cd840",
+            "tag": "cf1ab8c3a2a3911db76984f9cf285259"
         },
         {
             "filename": "enc_chunks/chunk007.enc",
             "start": 70,
             "duration": 10,
-            "iv": "51c9a4e984dd932afd9e0761",
-            "tag": "64b816662d30a4622e05e920859fbc7d"
+            "iv": "5f8d4991cdc1d3d42c3ae008",
+            "tag": "eda49fafcd643b587104d37851bcaf4d"
         },
         {
             "filename": "enc_chunks/chunk008.enc",
             "start": 80,
             "duration": 5.141133999999994,
-            "iv": "f1cb24bffbf3a7f0886814e5",
-            "tag": "97fbb3b83cb7cbd4742dbe05b1328f33"
+            "iv": "e08d6280d6317ee65c0cd053",
+            "tag": "9b2e6a253e3f2a2e202ae6dc827107b5"
         }
     ]
 }
