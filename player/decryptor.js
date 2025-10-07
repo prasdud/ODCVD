@@ -1,100 +1,247 @@
 // decryptor.js
-// -----------------------------
-// Barebones decryptor for ODCVD MVP
-// -----------------------------
+// Client-side decryption and playback for encrypted video chunks
 
-// Hardcoded AES key for testing (replace with secure key later)
-const AES_KEY_BASE64 = "QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUE=";
-
-async function importKey(base64Key) {
-    const rawKey = Uint8Array.from(atob(AES_KEY_BASE64), c => c.charCodeAt(0));
-    console.log("JS Key bytes:", rawKey);
-    // Should print: Uint8Array(32) [65, 65, 65, ..., 65]
-
-    return await crypto.subtle.importKey(
-        "raw",
-        rawKey,
-        { name: "AES-GCM" },
-        false,
-        ["decrypt"]
-    );
-}
-
-// Fetch and parse manifest.json
-async function fetchManifest() {
-    const response = await fetch("/manifest.json");
-    const manifest = await response.json();
-    return manifest.chunks;  // Array of chunk objects
-}
-
-// Fetch a single encrypted chunk
-async function fetchChunk(url) {
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    return arrayBuffer;
-}
-
-// Decrypt a chunk using AES-GCM
-async function decryptChunk(encryptedBuffer, key, ivHex, tagHex) {
-    const iv = hexStringToUint8Array(ivHex);
-    const tag = hexStringToUint8Array(tagHex);
-
-    console.log("IV:", ivHex, iv, "length:", iv.length);
-    console.log("Tag:", tagHex, tag, "length:", tag.length);
-    console.log("Ciphertext length:", encryptedBuffer.byteLength);
-
-    // Append the tag to the end of ciphertext (Web Crypto expects it that way)
-    const dataWithTag = new Uint8Array(encryptedBuffer.byteLength + tag.length);
-    dataWithTag.set(new Uint8Array(encryptedBuffer), 0);
-    dataWithTag.set(tag, encryptedBuffer.byteLength);
-
-    const decrypted = await crypto.subtle.decrypt(
-        { name: "AES-GCM", iv: iv },
-        key,
-        dataWithTag
-    );
-
-    return decrypted; // ArrayBuffer
-}
-
-// Utility: Convert hex string to Uint8Array
-function hexStringToUint8Array(hex) {
-    if (hex.length % 2 !== 0) throw "Invalid hex string";
-    const arr = new Uint8Array(hex.length / 2);
-    for (let i = 0; i < hex.length; i += 2) {
-        arr[i / 2] = parseInt(hex.substr(i, 2), 16);
+class EncryptedVideoPlayer {
+    constructor() {
+        this.videoElement = document.getElementById('video');
+        this.manifest = null;
+        this.currentChunkIndex = 0;
+        this.isPlaying = false;
+        this.key = null;
+        
+        // Initialize the player
+        this.init();
     }
-    return arr;
-}
 
-// Main function
-async function decryptAllChunks() {
-    const key = await importKey(AES_KEY_BASE64);
-    const chunks = await fetchManifest();
+    async init() {
+        try {
+            console.log('Initializing encrypted video player...');
+            
+            // Load AES key (in production, this would come from a secure endpoint)
+            await this.loadKey();
+            
+            // Load manifest
+            await this.loadManifest();
+            
+            // Set up event listeners
+            this.setupEventListeners();
+            
+            // Preload first chunk
+            await this.loadChunk(0);
+            
+            console.log('Player initialized successfully');
+            
+        } catch (error) {
+            console.error('Failed to initialize player:', error);
+        }
+    }
 
-    const decryptedChunks = [];
-
-    for (let i = 0; i < chunks.length; i++) {
-        const chunk = chunks[i];
-        console.log(`Fetching chunk: ${chunk.filename}`);
-        const encryptedBuffer = await fetchChunk("/" + chunk.filename);
-        console.log(`Decrypting chunk ${i}`);
-        const decryptedBuffer = await decryptChunk(
-            encryptedBuffer,
-            key,
-            chunk.iv,
-            chunk.tag
+    async loadKey() {
+        // In this demo, we'll use a hardcoded key that matches the server
+        // In production, this should be fetched from a secure endpoint
+        const keyBytes = new Uint8Array(32).fill(65); // 65 = 'A' in ASCII
+        this.key = await crypto.subtle.importKey(
+            'raw',
+            keyBytes,
+            { name: 'AES-GCM' },
+            false,
+            ['decrypt']
         );
-
-        decryptedChunks.push(decryptedBuffer);
-        console.log(`Chunk ${i} decrypted`);
+        console.log('AES key loaded');
     }
 
-    console.log("All chunks decrypted");
-    return decryptedChunks;
+    async loadManifest() {
+        const response = await fetch('/manifest.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load manifest: ${response.status}`);
+        }
+        
+        this.manifest = await response.json();
+        console.log(`Loaded manifest with ${this.manifest.chunks.length} chunks`);
+    }
+
+    setupEventListeners() {
+        // When video ends, load next chunk
+        this.videoElement.addEventListener('ended', () => {
+            this.loadNextChunk();
+        });
+
+        // When video time updates, check if we need to preload next chunk
+        this.videoElement.addEventListener('timeupdate', () => {
+            this.handleTimeUpdate();
+        });
+
+        // Handle errors
+        this.videoElement.addEventListener('error', (e) => {
+            console.error('Video error:', e);
+        });
+    }
+
+    async loadChunk(chunkIndex) {
+        if (!this.manifest || chunkIndex >= this.manifest.chunks.length) {
+            console.log('All chunks played or manifest not loaded');
+            this.videoElement.pause();
+            return;
+        }
+
+        const chunk = this.manifest.chunks[chunkIndex];
+        console.log(`Loading chunk ${chunkIndex}: ${chunk.filename}`);
+
+        try {
+            // Fetch encrypted chunk
+            const encryptedResponse = await fetch(`/enc_chunks/${chunk.filename}`);
+            if (!encryptedResponse.ok) {
+                throw new Error(`Failed to fetch chunk ${chunkIndex}`);
+            }
+
+            const encryptedData = await encryptedResponse.arrayBuffer();
+            
+            // Decrypt the chunk
+            const decryptedData = await this.decryptChunk(encryptedData, chunk);
+            
+            // Create blob URL for the decrypted video chunk
+            const blob = new Blob([decryptedData], { type: 'video/mp4' });
+            const videoUrl = URL.createObjectURL(blob);
+            
+            // Update video source
+            this.videoElement.src = videoUrl;
+            this.currentChunkIndex = chunkIndex;
+            
+            console.log(`Chunk ${chunkIndex} loaded and decrypted successfully`);
+            
+            // Auto-play if it's the first chunk
+            if (chunkIndex === 0) {
+                this.videoElement.play().catch(e => {
+                    console.log('Autoplay prevented, user interaction required');
+                });
+            }
+            
+        } catch (error) {
+            console.error(`Error loading chunk ${chunkIndex}:`, error);
+        }
+    }
+
+    async decryptChunk(encryptedData, chunkInfo) {
+        try {
+            // Convert IV and tag from hex strings to ArrayBuffer
+            const iv = this.hexToArrayBuffer(chunkInfo.iv);
+            const tag = this.hexToArrayBuffer(chunkInfo.tag);
+            
+            // Combine encrypted data with authentication tag
+            const encryptedBuffer = new Uint8Array(encryptedData);
+            const tagBuffer = new Uint8Array(tag);
+            const combinedData = new Uint8Array(encryptedBuffer.length + tagBuffer.length);
+            combinedData.set(encryptedBuffer);
+            combinedData.set(tagBuffer, encryptedBuffer.length);
+            
+            // Decrypt using AES-GCM
+            const decryptedData = await crypto.subtle.decrypt(
+                {
+                    name: 'AES-GCM',
+                    iv: iv,
+                    additionalData: new ArrayBuffer(0), // No additional data
+                    tagLength: 128 // 16 bytes
+                },
+                this.key,
+                combinedData
+            );
+            
+            return decryptedData;
+            
+        } catch (error) {
+            console.error('Decryption failed:', error);
+            throw new Error('Failed to decrypt video chunk');
+        }
+    }
+
+    hexToArrayBuffer(hexString) {
+        const bytes = new Uint8Array(hexString.length / 2);
+        for (let i = 0; i < hexString.length; i += 2) {
+            bytes[i / 2] = parseInt(hexString.substr(i, 2), 16);
+        }
+        return bytes;
+    }
+
+    async loadNextChunk() {
+        const nextIndex = this.currentChunkIndex + 1;
+        if (nextIndex < this.manifest.chunks.length) {
+            // Clean up previous blob URL to avoid memory leaks
+            if (this.videoElement.src) {
+                URL.revokeObjectURL(this.videoElement.src);
+            }
+            
+            await this.loadChunk(nextIndex);
+        } else {
+            console.log('Reached end of all chunks');
+            // Optional: loop back to beginning
+            // this.loadChunk(0);
+        }
+    }
+
+    handleTimeUpdate() {
+        // Preload next chunk when current chunk is near the end
+        const currentTime = this.videoElement.currentTime;
+        const duration = this.videoElement.duration;
+        
+        // If we're in the last 2 seconds of the current chunk, preload next
+        if (duration - currentTime < 2 && this.currentChunkIndex < this.manifest.chunks.length - 1) {
+            this.preloadNextChunk();
+        }
+    }
+
+    async preloadNextChunk() {
+        const nextIndex = this.currentChunkIndex + 1;
+        if (nextIndex >= this.manifest.chunks.length) return;
+        
+        // Just fetch and decrypt, don't switch the video source yet
+        try {
+            const chunk = this.manifest.chunks[nextIndex];
+            const encryptedResponse = await fetch(`/enc_chunks/${chunk.filename}`);
+            const encryptedData = await encryptedResponse.arrayBuffer();
+            
+            // Decrypt and cache (we don't use the result here, but this warms up the decryption)
+            await this.decryptChunk(encryptedData, chunk);
+            console.log(`Preloaded chunk ${nextIndex}`);
+            
+        } catch (error) {
+            console.error(`Failed to preload chunk ${nextIndex}:`, error);
+        }
+    }
+
+    // Public methods for external control
+    play() {
+        this.videoElement.play();
+    }
+
+    pause() {
+        this.videoElement.pause();
+    }
+
+    seekToChunk(chunkIndex) {
+        if (chunkIndex >= 0 && chunkIndex < this.manifest.chunks.length) {
+            if (this.videoElement.src) {
+                URL.revokeObjectURL(this.videoElement.src);
+            }
+            this.loadChunk(chunkIndex);
+        }
+    }
+
+    getCurrentChunkInfo() {
+        if (!this.manifest) return null;
+        return {
+            current: this.currentChunkIndex,
+            total: this.manifest.chunks.length,
+            chunk: this.manifest.chunks[this.currentChunkIndex]
+        };
+    }
 }
 
-// Start decryption (for testing)
-decryptAllChunks().then(chunks => {
-    console.log("Decrypted chunks array:", chunks);
+// Initialize player when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.videoPlayer = new EncryptedVideoPlayer();
 });
+
+// Export for module usage if needed
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = EncryptedVideoPlayer;
+}
