@@ -1,0 +1,1 @@
+TODO - Encrypted files usually have high entropy (close to 8 bits per byte). FUTURE WORK
