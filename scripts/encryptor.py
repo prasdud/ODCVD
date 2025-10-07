@@ -109,6 +109,12 @@ if __name__ == "__main__":
     if not valid:
         exit(1)
 
-    # Example: generate a random 256-bit key for testing
     key = get_random_bytes(32)
+
+    KEY_FILE = os.path.join(OUTPUT_DIR, "aes_key.bin")
+    with open(KEY_FILE, "wb") as f:
+        f.write(key)
+
+    print(f"AES key saved to {KEY_FILE}")
+    
     chunk_encryptor(key)
