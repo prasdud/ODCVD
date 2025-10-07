@@ -22,6 +22,7 @@ MANIFEST_PATH = os.path.join(ENC_CHUNKS_DIR, "manifest.json")
 
 app = FastAPI(title="ODCVD MVP Server")
 
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],      # REMOVE LATER
@@ -31,13 +32,9 @@ app.add_middleware(
 )
 
 
-# Serve encrypted chunks
-if os.path.exists(ENC_CHUNKS_DIR):
-    app.mount("/enc_chunks", StaticFiles(directory=ENC_CHUNKS_DIR), name="enc_chunks")
-
-# Serve frontend
-if os.path.exists(FRONTEND_DIR):
-    app.mount("/web", StaticFiles(directory=FRONTEND_DIR), name="decryptor_web")
+# Mount static directories
+app.mount("/web", StaticFiles(directory=FRONTEND_DIR), name="player")
+app.mount("/enc_chunks", StaticFiles(directory=ENC_CHUNKS_DIR), name="enc_chunks")
 
 
 # -----------------------------
