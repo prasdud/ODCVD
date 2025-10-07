@@ -1,0 +1,67 @@
+{
+    "chunks": [
+        {
+            "filename": "enc_chunks/chunk000.enc",
+            "start": 0,
+            "duration": 10,
+            "iv": "bebf42dec622360cb4caef44",
+            "tag": "39328b066542166dc1893a534f0e84a3"
+        },
+        {
+            "filename": "enc_chunks/chunk001.enc",
+            "start": 10,
+            "duration": 10,
+            "iv": "1665d98e556142e37bbec89b",
+            "tag": "4962bec79921e729005bb65e8a191782"
+        },
+        {
+            "filename": "enc_chunks/chunk002.enc",
+            "start": 20,
+            "duration": 10,
+            "iv": "d101c6a19d0e7db1e053ba9d",
+            "tag": "966fe3f51d98eaa38f15baa710d9a0ef"
+        },
+        {
+            "filename": "enc_chunks/chunk003.enc",
+            "start": 30,
+            "duration": 10,
+            "iv": "d03b0259526d9657168ee444",
+            "tag": "6911028a5315d28c5a976ae89756387b"
+        },
+        {
+            "filename": "enc_chunks/chunk004.enc",
+            "start": 40,
+            "duration": 10,
+            "iv": "ae7d8a92f4e2496fad21e1eb",
+            "tag": "4cd9a8880cfa4aa178b08ac32de0b7f9"
+        },
+        {
+            "filename": "enc_chunks/chunk005.enc",
+            "start": 50,
+            "duration": 10,
+            "iv": "c0469b2185976305b4eaa407",
+            "tag": "16266b7768da54851974aaa6d328d1d1"
+        },
+        {
+            "filename": "enc_chunks/chunk006.enc",
+            "start": 60,
+            "duration": 10,
+            "iv": "8499ea7caf1bb1e4a78ad423",
+            "tag": "59ff316958834e09373c0f261e5c4698"
+        },
+        {
+            "filename": "enc_chunks/chunk007.enc",
+            "start": 70,
+            "duration": 10,
+            "iv": "51c9a4e984dd932afd9e0761",
+            "tag": "64b816662d30a4622e05e920859fbc7d"
+        },
+        {
+            "filename": "enc_chunks/chunk008.enc",
+            "start": 80,
+            "duration": 5.141133999999994,
+            "iv": "f1cb24bffbf3a7f0886814e5",
+            "tag": "97fbb3b83cb7cbd4742dbe05b1328f33"
+        }
+    ]
+}
