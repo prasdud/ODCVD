@@ -90,7 +90,7 @@ def chunk_encryptor(key: bytes):
             f.write(ciphertext)
 
         # Update manifest
-        entry["filename"] = output_file
+        entry["filename"] = os.path.basename(output_file)  # <-- Only the filename!
         entry["iv"] = iv.hex()
         entry["tag"] = tag.hex()
 
