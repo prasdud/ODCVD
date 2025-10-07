@@ -16,7 +16,7 @@ import os
 # -----------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ENC_CHUNKS_DIR = os.path.join(BASE_DIR, "enc_chunks")
-FRONTEND_DIR = os.path.join(BASE_DIR, "decryptor_web")
+FRONTEND_DIR = os.path.join(BASE_DIR, "player")
 MANIFEST_PATH = os.path.join(ENC_CHUNKS_DIR, "manifest.json")
 
 
