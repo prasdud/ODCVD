@@ -33,6 +33,7 @@
             border-radius: 4px;
             margin: 10px 0;
             font-family: monospace;
+            text-align: center;
         }
         button {
             background: #4CAF50;
@@ -46,17 +47,8 @@
         button:hover {
             background: #45a049;
         }
-        button:disabled {
-            background: #666;
-            cursor: not-allowed;
-        }
-        .chunk-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
     </style>
+    <link rel="icon" href="data:,">
 </head>
 <body>
     <h1>🔒 Encrypted Video Player</h1>
@@ -64,47 +56,37 @@
     <video id="video" controls></video>
     
     <div class="status" id="status">
-        Loading player...
+        Loading and decrypting video...
     </div>
     
     <div class="controls">
-        <button onclick="videoPlayer.play()">Play</button>
-        <button onclick="videoPlayer.pause()">Pause</button>
-        <button onclick="videoPlayer.loadNextChunk()">Next Chunk</button>
-        <button onclick="showChunkInfo()">Show Info</button>
-    </div>
-
-    <div class="chunk-info" id="chunkInfo" style="display: none;">
-        <div>Chunk: <span id="currentChunk">0</span>/<span id="totalChunks">0</span></div>
-        <div>Duration: <span id="chunkDuration">0</span>s</div>
-        <div>Start: <span id="chunkStart">0</span>s</div>
+        <button onclick="document.getElementById('video').play()">Play</button>
+        <button onclick="document.getElementById('video').pause()">Pause</button>
+        <button onclick="document.getElementById('video').currentTime = 0">Restart</button>
     </div>
 
     <script src="/web/decryptor.js"></script>
     <script>
-        function showChunkInfo() {
-            const info = videoPlayer.getCurrentChunkInfo();
-            if (info) {
-                document.getElementById('currentChunk').textContent = info.current + 1;
-                document.getElementById('totalChunks').textContent = info.total;
-                document.getElementById('chunkDuration').textContent = info.chunk.duration;
-                document.getElementById('chunkStart').textContent = info.chunk.start;
-                document.getElementById('chunkInfo').style.display = 'flex';
-            }
-        }
+        const video = document.getElementById('video');
+        const status = document.getElementById('status');
+        
+        video.addEventListener('loadedmetadata', () => {
+            const duration = Math.floor(video.duration);
+            status.textContent = `✅ Video ready! Duration: ${duration}s | All chunks decrypted with AES-GCM`;
+        });
 
-        // Update status messages
-        setInterval(() => {
-            const video = document.getElementById('video');
-            const status = document.getElementById('status');
-            
-            if (video.src && window.videoPlayer && window.videoPlayer.manifest) {
-                const info = videoPlayer.getCurrentChunkInfo();
-                if (info) {
-                    status.textContent = `Playing chunk ${info.current + 1}/${info.total} | Decrypted AES-GCM`;
-                }
-            }
-        }, 1000);
+        video.addEventListener('error', (e) => {
+            status.textContent = '❌ Error loading video';
+            console.error('Video error:', e);
+        });
+
+        video.addEventListener('playing', () => {
+            status.style.background = '#1a4d1a';
+        });
+
+        video.addEventListener('pause', () => {
+            status.style.background = '#2a2a2a';
+        });
     </script>
 </body>
 </html>

@@ -1,67 +1,234 @@
 {
+    "init": {
+        "filename": "chunk_init.enc",
+        "iv": "f61db2f2eb37a8f49b4d5f48",
+        "tag": "12742010e64211396cdf96c5e57639b6"
+    },
     "chunks": [
         {
             "filename": "chunk000.enc",
-            "start": 0,
-            "duration": 10,
-            "iv": "5624350721cfbadd07aa73ab",
-            "tag": "322f908bf198b63bd0917c17cea1ffa8"
+            "iv": "52216cb27b987110cf236c9c",
+            "tag": "3f9b3c2a23e68a75e01983881962d1b2"
         },
         {
             "filename": "chunk001.enc",
-            "start": 10,
-            "duration": 10,
-            "iv": "ec53bfa1b19a3e5305178128",
-            "tag": "d1c35d052d990ddeea7f2f6909f299d7"
+            "iv": "146e6aaea61737aea2b9d5df",
+            "tag": "f642150eabf9d801c1e9bc363f53e28b"
         },
         {
             "filename": "chunk002.enc",
-            "start": 20,
-            "duration": 10,
-            "iv": "c22ad2797507a1be45dceb24",
-            "tag": "a1081c53a643c7609c1d80133b0377ae"
+            "iv": "571ff0cb6c9898c01a62ff51",
+            "tag": "3f98f71d55d35fb1df27ddad5cd6ce5a"
         },
         {
             "filename": "chunk003.enc",
-            "start": 30,
-            "duration": 10,
-            "iv": "e6b32550599d57f1edab6ff3",
-            "tag": "8d6c6f4ed3b7365dabfbc1208fa979a1"
+            "iv": "23f1fb55546354f1b10b03c9",
+            "tag": "d5be4f53ab1a406893d30ea21803d865"
         },
         {
             "filename": "chunk004.enc",
-            "start": 40,
-            "duration": 10,
-            "iv": "71f7aa7202f188d19b30ab67",
-            "tag": "de65f765147403c8d02c02dbda7cdbcf"
+            "iv": "91efbc7aeffd9492a037bd8e",
+            "tag": "c948be86c9799df62a13491d68c3d44f"
         },
         {
             "filename": "chunk005.enc",
-            "start": 50,
-            "duration": 10,
-            "iv": "5ab725952ee4b0e105fc8b38",
-            "tag": "068a97f368a9682547abb4ae0dec2330"
+            "iv": "e85abf880235145c3eb9121b",
+            "tag": "709b456f7f7dce69592f19508bb8876e"
         },
         {
             "filename": "chunk006.enc",
-            "start": 60,
-            "duration": 10,
-            "iv": "fc3c7d9a2969aaed0b0fe7d3",
-            "tag": "0ca0cc26336fefc65f0311363390bcf0"
+            "iv": "f0428033d074688846d531e5",
+            "tag": "fc842fb06295cb36cd8a5967cdaccc6d"
         },
         {
             "filename": "chunk007.enc",
-            "start": 70,
-            "duration": 10,
-            "iv": "373c2b8828e4189d7074cf92",
-            "tag": "af34bac2de3b606c08c249490561b90a"
+            "iv": "7d2f8a64558a5f786d70f84b",
+            "tag": "7def6347649578d8d87b22384a1f5053"
         },
         {
             "filename": "chunk008.enc",
-            "start": 80,
-            "duration": 5.141133999999994,
-            "iv": "e8d47d834562f41a8db74e7a",
-            "tag": "2bfd68283b4821fb1e1cc0f130791f4c"
+            "iv": "1da338ce28307ee705a44c50",
+            "tag": "95a1972672732c4f14ffaa3220682cf1"
+        },
+        {
+            "filename": "chunk009.enc",
+            "iv": "19c1b64444db69614c7e954b",
+            "tag": "37f50eec2c21cd506a62ef0fe6184e30"
+        },
+        {
+            "filename": "chunk010.enc",
+            "iv": "0f4d82336262074ca25da5bf",
+            "tag": "56a12b903d80fc0360ce5035c73e1910"
+        },
+        {
+            "filename": "chunk011.enc",
+            "iv": "ec1681f56f26ec1b326ef3a0",
+            "tag": "566a06de00c892d3d0e43ff357b79a48"
+        },
+        {
+            "filename": "chunk012.enc",
+            "iv": "4b8e4db52355e5b6454f0372",
+            "tag": "53aa6d26947eb69b1dba81a1ba821f4c"
+        },
+        {
+            "filename": "chunk013.enc",
+            "iv": "2e4249e776ef57bd542124ee",
+            "tag": "10d52b1a943789618bdb527b3446ee02"
+        },
+        {
+            "filename": "chunk014.enc",
+            "iv": "07621d5451674c6e0b9b61b8",
+            "tag": "d7d2b05ba350c704915737df983bb90c"
+        },
+        {
+            "filename": "chunk015.enc",
+            "iv": "81b7d09424bdf56cd7ff605a",
+            "tag": "3f29d5a9cbe2981636afa0c880fbd354"
+        },
+        {
+            "filename": "chunk016.enc",
+            "iv": "ccbf553f685acf917347b035",
+            "tag": "543b2dda1ed879a8154acf559688c1dd"
+        },
+        {
+            "filename": "chunk017.enc",
+            "iv": "9908c71432afd786244b0f3d",
+            "tag": "ad1afeb4518b8d35d206d69511b5f5d0"
+        },
+        {
+            "filename": "chunk018.enc",
+            "iv": "8ba17501e48f8b19743190a8",
+            "tag": "2914a37911e27983b35d59039551fa1f"
+        },
+        {
+            "filename": "chunk019.enc",
+            "iv": "7f18b01d60b3614a4c9f3122",
+            "tag": "ed1803c50c652903aacd21d6cef6e9f0"
+        },
+        {
+            "filename": "chunk020.enc",
+            "iv": "086c49948168c5515140a677",
+            "tag": "e043fe1f81ec26bf745b1123175ac338"
+        },
+        {
+            "filename": "chunk021.enc",
+            "iv": "3d1a3e9e2761e5f46dc4474e",
+            "tag": "de6a348bc6851c1443b8e3d924b65f56"
+        },
+        {
+            "filename": "chunk022.enc",
+            "iv": "2250e246785ac16ed762ec35",
+            "tag": "c23a0e04a96bb66a5f352e6e20b7c68e"
+        },
+        {
+            "filename": "chunk023.enc",
+            "iv": "cc74bbdc72fb242b367f6700",
+            "tag": "994fbed0659b1ce66604ea4793cff17b"
+        },
+        {
+            "filename": "chunk024.enc",
+            "iv": "c7cb10beae2fe22d9d29dabb",
+            "tag": "840484562bc3a39d9f4f141104f96723"
+        },
+        {
+            "filename": "chunk025.enc",
+            "iv": "a936cd666d01cbdbf5f4933d",
+            "tag": "e977800f7836e1a69f44366d3cbbd411"
+        },
+        {
+            "filename": "chunk026.enc",
+            "iv": "98bafc273e8a9dfbd6f8e247",
+            "tag": "f8690f52873462eaa9452cda29cf9e2e"
+        },
+        {
+            "filename": "chunk027.enc",
+            "iv": "a8a56cfb91acb5da2a10cdc2",
+            "tag": "d00c3366c7fdc9bcb2807797207235c2"
+        },
+        {
+            "filename": "chunk028.enc",
+            "iv": "eb1fd833a09e7c6d3d90a9fc",
+            "tag": "a869cb6abee2d3e4055db911a61af479"
+        },
+        {
+            "filename": "chunk029.enc",
+            "iv": "aadd0100487f71ca1802674f",
+            "tag": "d0ce9f5007ffa0f945e0ba9afb910f5f"
+        },
+        {
+            "filename": "chunk030.enc",
+            "iv": "c889d820cf8339e331fd6dad",
+            "tag": "f60a92d0c68f1ba2755bcaef99dc7113"
+        },
+        {
+            "filename": "chunk031.enc",
+            "iv": "94b8d723d2f40f3a49a05a88",
+            "tag": "df2b6388d531beeaf1e0cbe0a18ae62f"
+        },
+        {
+            "filename": "chunk032.enc",
+            "iv": "c52acb7712f93e8ea73ca6a1",
+            "tag": "8e1de1575fff9d1aa263fa60b642985b"
+        },
+        {
+            "filename": "chunk033.enc",
+            "iv": "63113ad3bbff96acbe571863",
+            "tag": "1d5bec58c78f5966484de4b1daca58d2"
+        },
+        {
+            "filename": "chunk034.enc",
+            "iv": "ed7e6555cfc4a9697620336c",
+            "tag": "a9850d8cc5168b5699e37ec25fbe0d73"
+        },
+        {
+            "filename": "chunk035.enc",
+            "iv": "3dd92c18ddad40b1c6a53ba6",
+            "tag": "506cfc872359aa02421fc67e6eddcc19"
+        },
+        {
+            "filename": "chunk036.enc",
+            "iv": "1e02832361614addb4f1f5bc",
+            "tag": "74493bdbaa33496359f29b10934f7051"
+        },
+        {
+            "filename": "chunk037.enc",
+            "iv": "378812046a29d3923b0aeadc",
+            "tag": "a5d8afc3f02778c1ec07449eca9aa5cb"
+        },
+        {
+            "filename": "chunk038.enc",
+            "iv": "348278f6c3a2f490933ed744",
+            "tag": "bace41df598684c0b55d684cf17cec33"
+        },
+        {
+            "filename": "chunk039.enc",
+            "iv": "db251d6039d4ecca823fee17",
+            "tag": "601382dcaeed8f0c7e3b02ca968fc906"
+        },
+        {
+            "filename": "chunk040.enc",
+            "iv": "59ec04c7599cc3957ba7f742",
+            "tag": "505080239ecd4bb2ab2d181975ba146d"
+        },
+        {
+            "filename": "chunk041.enc",
+            "iv": "b9e870b7f85457cc52d7f5a3",
+            "tag": "3392d89ecadaf10aef8027ddd8a1453f"
+        },
+        {
+            "filename": "chunk042.enc",
+            "iv": "db196e5521452280c77c27cb",
+            "tag": "776ec6f73fe7f4e06f5880482c123bfc"
+        },
+        {
+            "filename": "chunk043.enc",
+            "iv": "cecdf4a04c4a35cfb5c2e720",
+            "tag": "b6e946d4c0308731a80347b3140848da"
+        },
+        {
+            "filename": "chunk044.enc",
+            "iv": "e4ddf590c6c48623712a6f18",
+            "tag": "ce3954c542c025a9c4db3ba644277ff1"
         }
     ]
 }
