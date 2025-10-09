@@ -7,7 +7,7 @@ from Crypto.Random import get_random_bytes
 # -----------------------------
 # Config
 # -----------------------------
-INPUT_VIDEO = "demo/video.mp4"
+INPUT_VIDEO = "demo/backup-video.mp4"
 CHUNK_DIR = "chunks"        # temp folder for fMP4 segments
 OUTPUT_DIR = "enc_chunks"   # encrypted output
 AES_KEY_FILE = "aes_key.bin"
