@@ -8,8 +8,8 @@ from Crypto.Random import get_random_bytes
 # Config
 # -----------------------------
 INPUT_VIDEO = "demo/backup-video.mp4"
-CHUNK_DIR = "chunks"        # temp folder for fMP4 segments
-OUTPUT_DIR = "enc_chunks"   # encrypted output
+CHUNK_DIR = "chunks"        # directory for fMP4 segments / chunks
+OUTPUT_DIR = "enc_chunks"   # directory for encrypted chunks
 AES_KEY_FILE = "aes_key.bin"
 MANIFEST_FILE = "manifest.json"
 AES_KEY = b'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'  # 32 bytes
@@ -32,11 +32,11 @@ def run_command(cmd):
 def fragment_video(input_file, output_dir):
     """Use MP4Box to fragment input MP4 into fMP4 segments"""
     ensure_dir(output_dir)
-    mpd_file = os.path.join(output_dir, "stream.mpd")
+    mpd_file = os.path.join(output_dir, "stream.mpd") # MPD manifest file
     cmd = [
         "MP4Box",
-        "-dash", "1000",      # 1-second segments
-        "-frag-rap",
+        "-dash", "1000",      # 1000 = 1second segments
+        "-frag-rap",    # start each fragment on a Random Access Point
         "-rap",
         "-segment-name", "segment_",
         input_file,
@@ -51,7 +51,8 @@ def fragment_video(input_file, output_dir):
         f for f in os.listdir(output_dir)
         if f.endswith(".m4s") or f.endswith("init.mp4")
     ])
-    # Ensure init segment first
+
+    # always ensure init.mp4 is first
     segments.sort(key=lambda x: 0 if "init.mp4" in x else 1)
     print(f"[+] Segments found: {segments}")
     return segments
@@ -68,6 +69,8 @@ def encrypt_segments(segments, input_dir, output_dir, key):
 
     chunk_index = 0
     for seg in segments:
+
+        # grab input + output paths for all segments
         input_path = os.path.join(input_dir, seg)
         is_init = "init.mp4" in seg
         output_filename = generate_enc_filename(index=chunk_index, is_init=is_init)
