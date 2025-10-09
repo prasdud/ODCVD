@@ -1,4 +1,5 @@
 class VideoPlayer {
+    // init constructor
     constructor(videoElementId, manifestUrl, chunksPath, keyUrl, mimeCodec = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"') {
         this.videoElement = document.getElementById(videoElementId);
         this.manifestUrl = manifestUrl;
@@ -14,6 +15,8 @@ class VideoPlayer {
         this.init();
     }
 
+
+    // webcrypto API expects byte arrays for AES GCM
     hexToBytes(hex) {
         const bytes = new Uint8Array(hex.length / 2);
         for (let i = 0; i < hex.length; i += 2) {
@@ -22,6 +25,7 @@ class VideoPlayer {
         return bytes;
     }
 
+    // AES key served at /enc_chunks/aes_key.bin
     async fetchAESKey() {
         const resp = await fetch(this.keyUrl);
         const keyBuffer = await resp.arrayBuffer();
@@ -51,23 +55,24 @@ class VideoPlayer {
         this.sourceBuffer = this.mediaSource.addSourceBuffer(this.mimeCodec);
         this.sourceBuffer.addEventListener('updateend', this.processNextChunk.bind(this));
 
+        // load chunks into the buffer
         try {
-            // 1️⃣ Load AES key
+            // Load AES key
             this.aesKey = await this.fetchAESKey();
             console.log("AES key loaded.");
 
-            // 2️⃣ Load manifest
+            // Load manifest
             const manifestResp = await fetch(this.manifestUrl);
             const manifest = await manifestResp.json();
 
-            // 3️⃣ Queue segments (init first)
+            // Queue segments (init first)
             this.chunkQueue = [];
             if (manifest.init) this.chunkQueue.push(manifest.init);
             if (manifest.chunks) this.chunkQueue.push(...manifest.chunks);
 
             console.log(`Total segments: ${this.chunkQueue.length}`);
 
-            // 4️⃣ Start
+            // Start
             this.processNextChunk();
         } catch(err) {
             console.error("Init error:", err);
@@ -75,6 +80,7 @@ class VideoPlayer {
     }
 
     async processNextChunk() {
+        // verify all segments processed
         if (!this.chunkQueue.length) {
             if (this.mediaSource.readyState === 'open' && !this.sourceBuffer.updating) {
                 console.log("All segments processed. Ending stream.");
@@ -89,6 +95,7 @@ class VideoPlayer {
         console.log(`Processing segment: ${chunk.filename}`);
 
         try {
+            // Fetch encrypted chunk
             const resp = await fetch(`${this.chunksPath}/${chunk.filename}`);
             const ciphertext = await resp.arrayBuffer();
 
@@ -99,12 +106,14 @@ class VideoPlayer {
             const combined = new Uint8Array(ciphertext.byteLength); // ciphertext already has tag appended
             combined.set(new Uint8Array(ciphertext));
 
+            // actual decryption done here
             const decrypted = await crypto.subtle.decrypt(
                 { name: "AES-GCM", iv },
                 this.aesKey,
                 combined.buffer
             );
 
+            // add decrypted chunk to source buffer
             this.sourceBuffer.appendBuffer(decrypted);
         } catch(err) {
             console.error(`Error processing ${chunk.filename}:`, err);
